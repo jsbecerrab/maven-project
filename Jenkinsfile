@@ -27,7 +27,7 @@ pipeline {
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        bat "winsc -i D:/Slab/key/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i D:/Slab/key/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                     }
                 }
 

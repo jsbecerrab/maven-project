@@ -33,7 +33,7 @@ pipeline {
 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -iD:/Slab/key/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        sh "scp -i D:/Slab/key/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
                 }
             }

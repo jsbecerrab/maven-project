@@ -1,42 +1,12 @@
 pipeline {
     agent any
-
-        parameters {
-            string(name: 'tomcat_dev', defaultValue: '18.191.116.17', description: 'Staging Server')
-            string(name: 'tomcat_prod', defaultValue: '13.59.133.43', description: 'Production Server')
-        }
-
-        triggers {
-            pollSCM('* * * * *')
-        }
-
-        stages{
-        stage('Build'){
-            steps {
+    stages{
+        stage('build'){
+            steps{
                 sh 'mvn clean package'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
-
-        stage ('Deployments'){
-            parallel{
-                stage ('Deploy to Staging'){
-                    steps {
-                        sh "scp -i /home/sebastian9711/key2/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat/webapps"
-                    }
-                }
-
-                stage ("Deploy to Production"){
-                    steps {
-                        sh "scp -i /home/sebastian9711/key2/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat/webapps"
-                    }
-                }
             }
         }
     }
+
+       
 }
